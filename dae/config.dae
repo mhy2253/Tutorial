@@ -1,0 +1,105 @@
+global {
+    tproxy_port: 12345
+    tproxy_port_protect: true
+    pprof_port: 0
+    so_mark_from_dae: 0
+    log_level: info
+    disable_waiting_network: false
+    enable_local_tcp_fast_redirect: false
+    lan_interface: enp1s0
+    wan_interface: auto
+    auto_config_kernel_parameter: true
+    tcp_check_url: 'http://cp.cloudflare.com,1.1.1.1,2606:4700:4700::1111'
+    udp_check_dns: 'dns.google:53,8.8.8.8,2001:4860:4860::8888'
+    check_interval: 30s
+    check_tolerance: 50ms
+    dial_mode: domain    
+    allow_insecure: false    
+    sniffing_timeout: 100ms    
+    tls_implementation: tls
+    utls_imitate: chrome_auto
+    mptcp: false
+    
+}
+
+node {
+    hysteria2: 'hysteria2://Za3bKMgd4ltYy10gmH2BXafq@mhy.com:443/?sni=mhy.com&insecure=1'
+
+    trojan:  'trojan-go://your_password@mhy.com:8443?sni=mhy.com&allowInsecure=1#trojan'
+}
+
+dns {
+    ipversion_prefer: 4
+    upstream {
+        alidns: 'udp://223.5.5.5:53'
+        googledns: 'tcp+udp://1.1.1.1:53'
+
+        # alih3: 'h3://dns.alidns.com:443'
+        # alih3_path: 'h3://dns.alidns.com:443/dns-query'
+        # alihttp3: 'http3://dns.alidns.com:443'
+        # alihttp3_path: 'http3://dns.alidns.com:443/dns-query'
+        # ali_quic: 'quic://dns.alidns.com:853'
+        # ali_doh: 'https://dns.alidns.com:443'
+        # ali_dot: 'tls://dns.alidns.com:853'
+    }
+    routing {
+        request {
+            qname(geosite:category-ads-all) -> reject     
+            qname(geosite:cn, geosite:apple) -> alidns
+            qname(suffix:123pan.com, suffix:123957.com, suffix:cjjd19.com, suffix:oraclecloud.com, suffix:oracle.com, keyword:aliyun, suffix:cn) -> alidns
+            fallback: googledns
+        }
+    }
+}  
+group {
+    proxy {
+        policy: min_moving_avg
+    }
+}
+
+routing {
+    pname(NetworkManager, systemd-resolved, dnsmasq) -> must_direct
+    domain(suffix:local) -> direct
+    dip(224.0.0.0/3, 0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 172.16.0.0/12, 169.254.0.0/16, 192.0.0.0/24, 192.0.2.0/24, 192.168.0.0/16, 224.0.0.0/4, '::1/128', 'fc00::7/10', 'ff00::/8') -> direct
+    domain(keyword:aliyun, keyword:alicdn, keyword:alicdn, suffix:cjjd19.com, suffix:123pan.com, suffix:123957.com, suffix:cn) -> direct
+    domain(suffix:aliyuncs.com, suffix:115.com, suffix:115cdn.com, suffix:115cdn.net, suffix:116cd.cn, suffix:116cd.com, suffix:116cd.net, suffix:anxia.com, suffix:sq.cc) -> direct
+    domain(geosite:apple) -> direct
+    domain(suffix:apd-pcdnwxlogin.teg.tencent-cloud.net) -> direct
+    domain(suffix:btrace.qq.com) -> direct
+    domain(suffix:dldir1.qq.com) -> direct
+    domain(suffix:slife.xy-asia.com) -> direct
+    domain(suffix:soup.v.qq.com) -> direct
+    domain(suffix:vweixinf.tc.qq.com) -> direct
+    domain(suffix:weixin110.qq.com) -> direct
+    domain(suffix:wup.imtt.qq.com) -> direct
+    domain(suffix:iot-tencent.com) -> direct
+    domain(suffix:lbs.gtimg.com) -> direct
+    domain(suffix:map.qq.com) -> direct
+    domain(suffix:qlogo.cn) -> direct
+    domain(suffix:qpic.cn) -> direct
+    domain(suffix:servicewechat.com) -> direct
+    domain(suffix:tenpay.com) -> direct
+    domain(suffix:up-hl.3g.qq.com) -> direct
+    domain(suffix:vweixinthumb.tc.qq.com) -> direct
+    domain(suffix:wechat.com) -> direct
+    domain(suffix:wechatlegal.net) -> direct
+    domain(suffix:wechatos.net) -> direct
+    domain(suffix:wechatpay.com) -> direct
+    domain(suffix:weixin.com) -> direct
+    domain(suffix:weixin.qq.com) -> direct
+    domain(suffix:weixinbridge.com) -> direct
+    domain(suffix:weixinsxy.com) -> direct
+    domain(suffix:wx.gtimg.com) -> direct
+    domain(suffix:wx.qq.com) -> direct
+    domain(suffix:wxapp.tc.qq.com) -> direct
+    domain(suffix:wxs.qq.com) -> direct
+    domain(suffix:yun-hl.3g.qq.com) -> direct
+    domain(keyword:oracle) -> direct
+    dip(140.83.58.184/16, 64.181.244.241/8, 195.245.229.172/24) -> direct
+    dip(geoip:private) -> direct
+    l4proto(udp) && dport(443) -> block
+    domain(geosite:apple) -> direct
+    dip(geoip:cn) -> direct
+    domain(geosite:cn) -> direct  
+    fallback: proxy
+}
