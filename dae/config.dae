@@ -25,7 +25,9 @@ global {
 node {
     #hysteria2: 'hysteria2://Za3bKMgd4ltYy10gmH2BXafq@mhy.com:443/?sni=mhy.com&insecure=1'
 
-    trojan:  'trojan-go://xHvse7n9wLy#aBB$@mhy.com:443?sni=mhy.com&allowInsecure=1#trojan'
+    trojan: 'trojan-go://xHvse7n9wLy#aBB$@mhy.com:443?sni=mhy.com&allowInsecure=1#trojan'
+    
+    ss: 'ss://chacha20-ietf-poly1305:eNlo@1g@%6gq7H9Y@domain.com:22253#shadowsocks'
 }
 
 dns {
