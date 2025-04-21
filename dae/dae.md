@@ -13,6 +13,7 @@ mkdir -p /etc/dae && vim /etc/dae.config.dae
 chmod 0640 /etc/dae/config.dae
 ```
 ## Geo数据库文件
+
 - 1. 创建数据目录
 ```
 mkdir -p /usr/local/share/dae/
