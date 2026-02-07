@@ -92,7 +92,7 @@ vim /etc/systemd/system/trojan-go.service
 [Unit]
 Description=Trojan-Go - An unidentifiable mechanism that helps you bypass GFW
 Documentation=https://p4gefau1t.github.io/trojan-go/
-After=[network.target](http://network.target) [nss-lookup.target](http://nss-lookup.target)
+After=network.target nss-lookup.target
 
 [Service]
 User=root
@@ -105,7 +105,7 @@ RestartSec=10s
 LimitNOFILE=infinity
 
 [Install]
-WantedBy=[multi-user.target](http://multi-user.target)
+WantedBy=multi-user.target
 ```
 
 **4. 开启 Trojan-Go**
