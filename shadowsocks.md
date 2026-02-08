@@ -36,14 +36,13 @@ vim /etc/systemd/system/shadowsocks.service
 ```
 [Unit]
 Description=Shadowsocks Server
-After=[network.target](http://network.target)
-
+After=network.target
 [Service]
 ExecStart=/usr/local/bin/ssserver -c /etc/shadowsocks/config.json
 Restart=on-abort
 
 [Install]
-WantedBy=[multi-user.target](http://multi-user.target)
+WantedBy=multi-user.target
 ```
 
 **4. 启动 shadowsocks**
