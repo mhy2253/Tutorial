@@ -1,7 +1,7 @@
 **1. 安装程序**
 
 ```bash
-wget https://github.com/shadowsocks/shadowsocks-rust/releases/download/v1.22.0/shadowsocks-v1.22.0.aarch64-unknown-linux-gnu.tar.xz && tar -xf shadowsocks-v1.22.0.aarch64-unknown-linux-gnu.tar.xz -C /usr/local/bin/ && chmod +x /usr/local/bin/ssserver && rm shadowsocks-v1.22.0.aarch64-unknown-linux-gnu.tar.xz
+wget https://github.com/shadowsocks/shadowsocks-rust/releases/download/v1.24.0/shadowsocks-v1.24.0.aarch64-unknown-linux-gnu.tar.xz && tar -xf shadowsocks-v1.24.0.aarch64-unknown-linux-gnu.tar.xz -C /usr/local/bin/ && chmod +x /usr/local/bin/ssserver && rm shadowsocks-v1.24.0.aarch64-unknown-linux-gnu.tar.xz
 ```
 
 **2. 创建配置文件**
