@@ -1,27 +1,38 @@
-- 下载二进制可执行文件 releases
+# Mihomo Linux 安装指南
 
+---
+
+## 1. 下载二进制可执行文件
+
+```bash
+wget https://github.com/MetaCubeX/mihomo/releases/download/v1.19.0/mihomo-linux-arm64-v1.19.0.gz
 ```
-wget <https://github.com/MetaCubeX/mihomo/releases/download/v1.19.0/mihomo-linux-arm64-v1.19.0.gz>
 
-```
+---
 
-- 将下载的二进制可执行文件重名名为 mihomo 并移动到 /usr/local/bin/
+## 2. 解压并移动到系统目录
 
-```
+将下载的文件解压，重命名为 `mihomo` 并移动到 `/usr/local/bin/`：
+
+```bash
 gzip -kd mihomo-linux-arm64-v1.19.0.gz && mv mihomo-linux-arm64-v1.19.0 /usr/local/bin/mihomo
-
 ```
 
-- 创建配置文件
+---
 
-```
+## 3. 创建配置文件
+
+```bash
 mkdir -p /etc/mihomo && vim /etc/mihomo/config.yaml
-
 ```
 
-- 创建 systemd 配置文件 /etc/systemd/system/mihomo.service:
+---
 
-```
+## 4. 创建 systemd 服务文件
+
+新建文件 `/etc/systemd/system/mihomo.service`，写入以下内容：
+
+```ini
 [Unit]
 Description=mihomo Daemon, Another Clash Kernel.
 After=network.target NetworkManager.service systemd-networkd.service iwd.service
@@ -39,52 +50,54 @@ ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
 WantedBy=multi-user.target
-
 ```
 
-- 使用以下命令重新加载 systemd:
+---
 
-```
+## 5. 服务管理
+
+### 重新加载 systemd
+
+```bash
 systemctl daemon-reload
-
 ```
 
-- 启用 mihomo 服务：
+### 启用开机自启
 
-```
+```bash
 systemctl enable mihomo
-
 ```
 
-- 使用以下命令立即启动 mihomo:
+### 立即启动
 
-```
+```bash
 systemctl start mihomo
-
 ```
 
-- 使用以下命令使 mihomo 重新加载：
+### 重新加载配置
 
-```
+```bash
 systemctl reload mihomo
-
 ```
 
-- 使用以下命令检查 mihomo 的运行状况：
+---
 
-```
+## 6. 状态与日志
+
+### 查看运行状态
+
+```bash
 systemctl status mihomo
-
 ```
 
-- 使用以下命令检查 mihomo 的运行日志：
+### 查看日志（末尾）
 
-```
+```bash
 journalctl -u mihomo -o cat -e
-
 ```
 
-```
+### 实时跟踪日志
+
+```bash
 journalctl -u mihomo -o cat -f
-
 ```
